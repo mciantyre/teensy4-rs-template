@@ -1,0 +1,15 @@
+[package]
+name = "{{project-name}}"
+version = "0.1.0"
+authors = ["{{authors}}"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+panic-halt = "0.2.0"
+cortex-m = "0.6.2"
+embedded-hal = "0.2.3"
+
+[dependencies.teensy4-bsp]
+git = "https://github.com/mciantyre/teensy4-rs.git"

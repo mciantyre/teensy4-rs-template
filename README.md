@@ -5,8 +5,7 @@ Teensy 4 projects.
 
 ```
 cargo install cargo-generate
-cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name
-hello-world
+cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
 ```
 
 See the [teensy4-rs

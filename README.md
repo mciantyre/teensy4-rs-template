@@ -13,4 +13,4 @@ README](https://github.com/mciantyre/teensy4-rs/blob/master/README.md) for build
 
 Use the `hardware-test.sh` script to build and prepare a release build. If the
 `teensy_cli_loader` is on your `$PATH`, we'll use it to load the binary on your
-Teensy 4. The example should turn on your Teensy 4's LED.
+Teensy 4. The example provided in the template should turn on your Teensy 4's LED.

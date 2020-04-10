@@ -2,4 +2,4 @@ README.md
 LICENSE-APACHE
 LICENSE-MIT
 Cargo.lock
-.github/*
+.github/workflows/cron.yml

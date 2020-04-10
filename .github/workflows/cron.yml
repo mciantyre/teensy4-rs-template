@@ -13,9 +13,16 @@ jobs:
     steps:
       - name: Install build dependencies
         run: sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi
+      - name: Install thumbv7em-none-eabihf target
+        uses: actions-rs/toolchain@v1
+        with:
+          target: thumbv7em-none-eabihf
+          override: true
       - name: Install cargo-generate
         run: cargo install cargo-generate
       - name: Generate the template
         run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
       - name: Check the template
+        # Not including --target flag; template should support a .cargo/config
+        # with the correct target.
         run: cd hello-world && cargo check --verbose

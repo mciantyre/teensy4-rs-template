@@ -2,10 +2,8 @@ name: weekly
 
 on:
   schedule:
-    # At 15:28 on a Tuesday
-    - cron: "28 15 * * 2"
-  pull_request:
-    branches: [ master ]
+    # At 15:28 on a Thursday
+    - cron: "28 15 * * 4"
 
 jobs:
   build:

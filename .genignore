@@ -2,3 +2,4 @@ README.md
 LICENSE-APACHE
 LICENSE-MIT
 Cargo.lock
+.github/*

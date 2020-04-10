@@ -1,0 +1,19 @@
+name: weekly
+
+on:
+  schedule:
+    # At 15:28 on a Tuesday
+    - cron: "28 15 * * 2"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install build dependencies
+        run: sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi
+      - name: Install cargo-generate
+        run: cargo install cargo-generate
+      - name: Generate the template
+        run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
+      - name: Check the template
+        run: cd hello-world && cargo check --verbose

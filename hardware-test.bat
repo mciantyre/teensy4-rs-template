@@ -9,7 +9,7 @@ IF NOT DEFINED scriptbuildflag (
 	SET scriptbuildmode=release
 )
 cargo build %scriptbuildflag% || goto :error
-rmdir /S /Q out || goto :error
+if exist out rmdir /S /Q out || goto :error
 mkdir out || goto :error
 copy "target\thumbv7em-none-eabihf\%scriptbuildmode%\%scriptbin%" "out\%scriptbin%" || goto :error
 REM arm-none-eabi-objdump -d -S -C "out\%scriptbin%" > "out\%scriptbin%.lst" || goto :error

@@ -17,9 +17,9 @@ cargo build $BUILD_MODE_FLAG
 rm -Rf out
 mkdir out
 cp target/thumbv7em-none-eabihf/$BUILD_MODE/{{crate_name}} out/{{crate_name}}
-# arm-none-eabi-objdump -d -S -C out/{{crate_name}} > out/{{crate_name}}.lst
-# arm-none-eabi-objdump -t -C out/{{crate_name}} > out/{{crate_name}}.sym
-arm-none-eabi-objcopy -O ihex -R .eeprom out/{{crate_name}} out/{{crate_name}}.hex
+# rust-objdump -d -S -C out/{{crate_name}} > out/{{crate_name}}.lst
+# rust-objdump -t -C out/{{crate_name}} > out/{{crate_name}}.sym
+rust-objcopy -O ihex -R .eeprom out/{{crate_name}} out/{{crate_name}}.hex
 
 if [ -x "$(command -v teensy_loader_cli)" ]; then
     teensy_loader_cli --mcu=TEENSY40 -w -v out/{{crate_name}}.hex

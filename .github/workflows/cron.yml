@@ -19,6 +19,8 @@ jobs:
       - name: Install cargo-generate
         run: cargo install cargo-generate
       - name: Generate the template
-        run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
+        run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world && cd hello-world
+      - name: Install cargo-binutils
+        run: cargo install cargo-binutils
       - name: Check the template
-        run: cd hello-world && ./hardware-test.sh
+        run: cargo objcopy -- -O ihex hello-world.hex

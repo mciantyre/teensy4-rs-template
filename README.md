@@ -6,13 +6,11 @@ Teensy 4 projects.
 ```
 cargo install cargo-generate
 cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
+cd hello-world
+cargo objcopy --release -- -O ihex hello-world.hex
 ```
 
 See the [teensy4-rs
 README](https://github.com/mciantyre/teensy4-rs/blob/master/README.md) for build requirements.
-
-Use the `hardware-test.sh` script to build and prepare a release build. If the
-`teensy_cli_loader` is on your `$PATH`, we'll use it to load the binary on your
-Teensy 4. The example provided in the template should turn on your Teensy 4's LED.
 
 Weekly build: ![weekly build](https://github.com/mciantyre/teensy4-rs-template/workflows/weekly/badge.svg)

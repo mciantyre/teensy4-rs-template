@@ -9,19 +9,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install build dependencies
-        run: sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi
-      - name: Install thumbv7em-none-eabihf target
+      - name: Install dependencies
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          component: llvm-tools-preview
           target: thumbv7em-none-eabihf
           override: true
       - name: Install cargo-generate
         run: cargo install cargo-generate
       - name: Generate the template
-        run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
+        run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world && cd hello-world
+      - name: Install cargo-binutils
+        run: cargo install cargo-binutils
       - name: Check the template
-        # Not including --target flag; template should support a .cargo/config
-        # with the correct target.
-        run: cd hello-world && cargo check --verbose
+        run: cargo objcopy -- -O ihex hello-world.hex

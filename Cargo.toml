@@ -15,5 +15,3 @@ git = "https://github.com/mciantyre/teensy4-rs.git"
 [[bin]]
 name = "{{crate_name}}"
 path = "src/main.rs"
-bench = false  # Disable RLS warnings about 'no bench crate found'
-test = false  # Disable RLS warnings about 'no test crate found'

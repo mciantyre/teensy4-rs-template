@@ -1,20 +1,23 @@
+//! Blink the Teensy's LED
+
 #![no_std]
 #![no_main]
 
 extern crate panic_halt;
 
-use bsp::rt::entry;
+use bsp::rt;
+use embedded_hal::digital::v2::ToggleableOutputPin;
 use teensy4_bsp as bsp;
 
-use embedded_hal::digital::v2::OutputPin;
+const LED_PERIOD_MS: u32 = 1_000;
 
-#[entry]
+#[rt::entry]
 fn main() -> ! {
-    let mut peripherals = bsp::Peripherals::take().unwrap();
-    let mut led = bsp::configure_led(&mut peripherals.gpr, peripherals.pins.p13);
+    let mut p = bsp::Peripherals::take().unwrap();
+    let mut led: bsp::LED = bsp::configure_led(&mut p.gpr, p.pins.p13);
 
-    led.set_high().unwrap();
     loop {
-        core::sync::atomic::spin_loop_hint();
+        bsp::delay(LED_PERIOD_MS);
+        led.toggle().unwrap();
     }
 }

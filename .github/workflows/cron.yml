@@ -18,11 +18,17 @@ jobs:
           component: llvm-tools-preview
           target: thumbv7em-none-eabihf
           override: true
-      - name: Install cargo-generate
-        run: cargo install cargo-generate
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: cargo-generate
+          version: latest
+          use-tool-cache: true
       - name: Generate the template
         run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
-      - name: Install cargo-binutils
-        run: cargo install cargo-binutils
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: cargo-binutils
+          version: latest
+          use-tool-cache: true
       - name: Check the template
         run: cd hello-world && cargo objcopy -- -O ihex hello-world.hex

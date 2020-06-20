@@ -25,10 +25,5 @@ jobs:
           use-tool-cache: true
       - name: Generate the template
         run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
-      - uses: actions-rs/install@v0.1
-        with:
-          crate: cargo-binutils
-          version: latest
-          use-tool-cache: true
       - name: Check the template
-        run: cd hello-world && cargo objcopy -- -O ihex hello-world.hex
+        run: cd hello-world && cargo build

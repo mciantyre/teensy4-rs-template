@@ -19,7 +19,13 @@ jobs:
           target: thumbv7em-none-eabihf
           override: true
       - name: Install cargo-generate
-        run: ./install-cargo-generate.sh
+        env:
+          PACKAGE: cargo-generate-v0.5.0-x86_64-unknown-linux-musl
+        run: |
+          curl -LJO https://github.com/ashleygwilliams/cargo-generate/releases/latest/download/${PACKAGE}.tar.gz && \
+          tar -xvf ${PACKAGE}.tar.gz && \
+          cp ${PACKAGE}/cargo-generate $(dirname $(which cargo)) && \
+          cargo generate --help
       - name: Generate the template
         run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
       - name: Check the template

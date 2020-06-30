@@ -1,5 +1,7 @@
 # teensy4-rs-template
 
+![Check Template](https://github.com/mciantyre/teensy4-rs/workflows/Check%20Template/badge.svg)
+
 A [`cargo-generate`](https://crates.io/crates/cargo-generate) template for
 Teensy 4 projects.
 
@@ -12,5 +14,3 @@ cargo objcopy --release -- -O ihex hello-world.hex
 
 See the [teensy4-rs
 README](https://github.com/mciantyre/teensy4-rs/blob/master/README.md) for build requirements.
-
-Weekly build: ![weekly build](https://github.com/mciantyre/teensy4-rs-template/workflows/weekly/badge.svg)

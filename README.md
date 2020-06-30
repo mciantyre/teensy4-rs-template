@@ -1,6 +1,9 @@
 # teensy4-rs-template
 
-![Check Template](https://github.com/mciantyre/teensy4-rs/workflows/Check%20Template/badge.svg)
+[![Check Template][check-template-badge]][check-template-url]
+
+[check-template-badge]: https://github.com/mciantyre/teensy4-rs/workflows/Check%20Template/badge.svg
+[check-template-url]: https://github.com/mciantyre/teensy4-rs/actions?query=workflow%3A%22Check+Template%22
 
 A [`cargo-generate`](https://crates.io/crates/cargo-generate) template for
 Teensy 4 projects.

@@ -17,3 +17,8 @@ git = "https://github.com/mciantyre/teensy4-rs.git"
 [patch.crates-io.cortex-m-rt]
 git = "https://github.com/mciantyre/teensy4-rs"
 branch = "master"
+
+# Don't optimize build dependencies, like proc macros.
+# Helps with build times.
+[profile.release.build-override]
+opt-level = 0

@@ -12,6 +12,8 @@ embedded-hal = "0.2.3"
 [dependencies.teensy4-bsp]
 git = "https://github.com/mciantyre/teensy4-rs.git"
 
-[[bin]]
-name = "{{crate_name}}"
-path = "src/main.rs"
+# Patch `cortex-m-rt` for reasons described here:
+# https://github.com/mciantyre/teensy4-rs#runtime
+[patch.crates-io.cortex-m-rt]
+git = "https://github.com/mciantyre/teensy4-rs"
+branch = "master"

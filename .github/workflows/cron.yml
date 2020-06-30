@@ -5,7 +5,7 @@ on:
     # At 15:28 on a Thursday
     - cron: "28 15 * * 4"
   push:
-    branches: [ master ]
+    branches: [ master, feature/faster-ci ]
 
 jobs:
   build:
@@ -15,14 +15,11 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          component: llvm-tools-preview
+          components: llvm-tools-preview
           target: thumbv7em-none-eabihf
           override: true
-      - uses: actions-rs/install@v0.1
-        with:
-          crate: cargo-generate
-          version: latest
-          use-tool-cache: true
+      - name: Install cargo-generate
+        run: ./install-cargo-generate.sh
       - name: Generate the template
         run: cargo generate --git https://github.com/mciantyre/teensy4-rs-template --name hello-world
       - name: Check the template

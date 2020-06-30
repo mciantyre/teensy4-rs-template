@@ -5,7 +5,7 @@ on:
     # At 15:28 on a Thursday
     - cron: "28 15 * * 4"
   push:
-    branches: [ master, feature/faster-ci ]
+    branches: [ master ]
 
 jobs:
   build:

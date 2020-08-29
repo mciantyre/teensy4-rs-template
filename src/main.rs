@@ -5,19 +5,20 @@
 
 extern crate panic_halt;
 
-use bsp::rt;
-use embedded_hal::digital::v2::ToggleableOutputPin;
+use bsp::rt::entry;
+use cortex_m::asm::wfi;
 use teensy4_bsp as bsp;
 
-const LED_PERIOD_MS: u32 = 1_000;
+use embedded_hal::digital::v2::OutputPin;
 
-#[rt::entry]
+#[entry]
 fn main() -> ! {
-    let mut p = bsp::Peripherals::take().unwrap();
-    let mut led: bsp::LED = bsp::configure_led(&mut p.gpr, p.pins.p13);
+    let peripherals = bsp::Peripherals::take().unwrap();
+    let pins = bsp::t40::pins(peripherals.iomuxc);
+    let mut led = bsp::configure_led(pins.p13);
 
     loop {
-        p.systick.delay(LED_PERIOD_MS);
-        led.toggle().unwrap();
+        led.set_high().unwrap();
+        wfi();
     }
 }

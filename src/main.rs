@@ -1,24 +1,24 @@
-//! Blink the Teensy's LED
+//! The starter code slowly blinks the LED
 
 #![no_std]
 #![no_main]
 
 extern crate panic_halt;
 
-use bsp::rt::entry;
-use cortex_m::asm::wfi;
+use bsp::rt;
 use teensy4_bsp as bsp;
 
-use embedded_hal::digital::v2::OutputPin;
+const LED_PERIOD_MS: u32 = 1_000;
 
-#[entry]
+#[rt::entry]
 fn main() -> ! {
-    let peripherals = bsp::Peripherals::take().unwrap();
-    let pins = bsp::t40::into_pins(peripherals.iomuxc);
-    let mut led = bsp::configure_led(pins.p13);
+    let p = bsp::Peripherals::take().unwrap();
+    let mut systick = bsp::SysTick::new(cortex_m::Peripherals::take().unwrap().SYST);
+    let pins = bsp::t40::into_pins(p.iomuxc);
+    let mut led: bsp::LED = bsp::configure_led(pins.p13);
 
     loop {
-        led.set_high().unwrap();
-        wfi();
+        led.toggle();
+        systick.delay(LED_PERIOD_MS);
     }
 }

@@ -5,12 +5,11 @@
 
 extern crate panic_halt;
 
-use bsp::rt;
 use teensy4_bsp as bsp;
 
 const LED_PERIOD_MS: u32 = 1_000;
 
-#[rt::entry]
+#[cortex_m_rt::entry]
 fn main() -> ! {
     let p = bsp::Peripherals::take().unwrap();
     let mut systick = bsp::SysTick::new(cortex_m::Peripherals::take().unwrap().SYST);

@@ -8,10 +8,12 @@ edition = "2018"
 cortex-m = "0.6.2"
 cortex-m-rt = "0.6.13"
 embedded-hal = "0.2.3"
+# Remove me if you don't want logging
+log = "0.4.11"
 teensy4-panic = "0.1.0"
 
 [dependencies.teensy4-bsp]
-version = "0.1"
+version = "0.2"
 features = ["rt"]
 
 # Don't optimize build dependencies, like proc macros.

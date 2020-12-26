@@ -1,10 +1,13 @@
-//! The starter code slowly blinks the LED
+//! The starter code slowly blinks the LED, and sets up
+//! USB logging.
 
 #![no_std]
 #![no_main]
 
 use teensy4_bsp as bsp;
 use teensy4_panic as _;
+
+mod logging;
 
 const LED_PERIOD_MS: u32 = 1_000;
 
@@ -15,8 +18,12 @@ fn main() -> ! {
     let pins = bsp::t40::into_pins(p.iomuxc);
     let mut led: bsp::LED = bsp::configure_led(pins.p13);
 
+    // See the `logging` module docs for more info.
+    logging::init();
+
     loop {
         led.toggle();
         systick.delay(LED_PERIOD_MS);
+        log::info!("Hello world");
     }
 }

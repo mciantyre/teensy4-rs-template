@@ -3,9 +3,8 @@
 #![no_std]
 #![no_main]
 
-extern crate panic_halt;
-
 use teensy4_bsp as bsp;
+use teensy4_panic as _;
 
 const LED_PERIOD_MS: u32 = 1_000;
 

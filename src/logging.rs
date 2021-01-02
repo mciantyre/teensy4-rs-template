@@ -5,48 +5,65 @@
 //! - this module
 //! - the `log` dependency in Cargo.toml
 
-use super::bsp::{self, hal::ral::usb::USB1, interrupt, usb};
+use core::cell::RefCell;
+use cortex_m::interrupt::Mutex;
 
-/// You can specify any USB logging filters here
-///
-/// See the teensy4_bsp docs for more information on
-/// logging filters.
-const FILTERS: &[usb::Filter] = &[];
+use bsp::hal::ral::usb::USB1;
+use bsp::interrupt;
+use teensy4_bsp as bsp;
 
-/// Initialize the USB logging system
+/// Specify any logging filters here
 ///
-/// You can only call this function once! Do it early in your
-/// program.
+/// See the BSP docs for more information
+/// on logging filters.
+const FILTERS: &'static [bsp::usb::Filter] = &[
+    ("{{project-name}}", None),
+];
+
+/// Initialize the USB logging system, and prepares the
+/// USB ISR with the poller
+///
+/// When `init` returns, the USB interrupt will be enabled,
+/// and the host may begin to interface the device.
+/// You should only call this once.
 ///
 /// # Panics
 ///
-/// Panics if the USB1 peripheral instance is already taken.
-pub fn init() {
-    assert!(usb::init(
-        USB1::take().unwrap(),
-        usb::LoggingConfig {
+/// Panics if the imxrt-ral USB1 instance is already taken.
+pub fn init() -> Result<bsp::usb::Reader, bsp::usb::Error> {
+    let inst = USB1::take().unwrap();
+    bsp::usb::init(
+        inst,
+        bsp::usb::LoggingConfig {
             filters: FILTERS,
             ..Default::default()
-        }
+        },
     )
-    .is_ok());
-
-    // Safety: This call is safe as long as you use the USB
-    // interrupt handler supplied by this module. If you add
-    // any other state to the handler, you'll need to assess
-    // the safety of this call yourself.
-    unsafe { cortex_m::peripheral::NVIC::unmask(bsp::interrupt::USB_OTG1) };
+    .map(|(poller, reader)| {
+        setup(poller);
+        reader
+    })
 }
 
-/// Drive the USB logging system by calling `poll` in the USB
-/// interrupt handler. Without this, you might not see a USB
-/// device connected to your host.
-///
-/// # Safety
-///
-/// Users should not call this function. It will be added to the
-/// interrupt vector table, and invoked by the hardware.
-#[cortex_m_rt::interrupt]
-unsafe fn USB_OTG1() {
-    usb::poll();
+/// Setup the USB ISR with the USB poller
+fn setup(poller: bsp::usb::Poller) {
+    static POLLER: Mutex<RefCell<Option<bsp::usb::Poller>>> = Mutex::new(RefCell::new(None));
+
+    #[cortex_m_rt::interrupt]
+    fn USB_OTG1() {
+        cortex_m::interrupt::free(|cs| {
+            POLLER
+                .borrow(cs)
+                .borrow_mut()
+                .as_mut()
+                .map(|poller| poller.poll());
+        });
+    }
+
+    cortex_m::interrupt::free(|cs| {
+        *POLLER.borrow(cs).borrow_mut() = Some(poller);
+        // Safety: invoked in a critical section that also prepares the ISR
+        // shared memory. ISR memory is ready by the time the ISR runs.
+        unsafe { cortex_m::peripheral::NVIC::unmask(bsp::interrupt::USB_OTG1) };
+    });
 }

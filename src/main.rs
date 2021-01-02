@@ -19,7 +19,7 @@ fn main() -> ! {
     let mut led: bsp::LED = bsp::configure_led(pins.p13);
 
     // See the `logging` module docs for more info.
-    logging::init();
+    assert!(logging::init().is_ok());
 
     loop {
         led.toggle();

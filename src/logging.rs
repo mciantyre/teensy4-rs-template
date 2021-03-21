@@ -17,7 +17,10 @@ use teensy4_bsp as bsp;
 /// See the BSP docs for more information
 /// on logging filters.
 const FILTERS: &'static [bsp::usb::Filter] = &[
-    ("{{project-name}}", None),
+    // Try enabling this filter to only see
+    // log messages from main.rs.
+    //
+    // ("{{crate_name}}", None),
 ];
 
 /// Initialize the USB logging system, and prepares the

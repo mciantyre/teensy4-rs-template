@@ -15,5 +15,12 @@ cd hello-world
 cargo objcopy --release -- -O ihex hello-world.hex
 ```
 
-See the [teensy4-rs
-README](https://github.com/mciantyre/teensy4-rs/blob/master/README.md) for build requirements.
+For more information, see the documentation in the
+[teensy4-rs project][teensy4-rs].
+
+## Issues
+
+Having an issue with the template? Want to suggest a new feature for the
+template? Open an issue in the [teensy4-rs][teensy4-rs] project.
+
+[teensy4-rs]: https://github.com/mciantyre/teensy4-rs

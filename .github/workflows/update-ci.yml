@@ -1,0 +1,22 @@
+name: Update CI branch
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  update-ci:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ci
+        fetch-depth: 0
+    - name: Set git config
+      run: |
+        git config --local user.name "CI"
+        git config --local user.email "<none>"
+    - name: Merge 'master' into 'ci'
+      run: git pull origin master --no-edit
+    - name: Push 'ci' to GitHub
+      run: git push origin ci

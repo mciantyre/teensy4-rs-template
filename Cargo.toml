@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 cortex-m = "0.6.2"
-cortex-m-rt = "0.6.13"
+cortex-m-rt = "0.7"
 embedded-hal = "0.2.3"
 # Remove me if you don't want logging
 log = "0.4.11"

@@ -5,7 +5,7 @@ authors = ["{{authors}}"]
 edition = "2021"
 
 [dependencies]
-cortex-m = "0.6.2"
+cortex-m = "0.7"
 cortex-m-rt = "0.7"
 embedded-hal = "0.2.3"
 # Remove me if you don't want logging

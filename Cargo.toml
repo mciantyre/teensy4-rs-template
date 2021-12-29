@@ -13,7 +13,7 @@ log = "0.4.11"
 teensy4-panic = "0.2.0"
 
 [dependencies.teensy4-bsp]
-version = "0.2"
+version = "0.3"
 features = ["rt"]
 
 # Don't optimize build dependencies, like proc macros.

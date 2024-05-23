@@ -1,25 +1,24 @@
 [package]
 name = "{{project-name}}"
 version = "0.1.0"
-authors = ["{{authors}}"]
 edition = "2021"
 
 [dependencies]
-cortex-m = "0.7"
-embedded-hal = "0.2"
-# Remove me if you don't want logging.
-log = "0.4"
-teensy4-panic = "0.2"
+rtic = { version = "2", features = ["thumbv7-backend"] }
+rtic-monotonics = { version = "1", default-features = false, features = ["cortex-m-systick"] }
+
+# Remove these if you don't want logging.
+imxrt-log = { version = "0.1", default-features = false, features = ["log", "usbd"] }
+log = { version = "0.4", features = ["max_level_debug", "release_max_level_info"] }
+
+teensy4-panic = { version = "0.2", features = ["log"] }
 
 [dependencies.teensy4-bsp]
 git = "https://github.com/mciantyre/teensy4-rs.git"
 branch = "master"
 features = [
-    # Use the BSP's runtime. This lets you write your
-    # `main()` function.
+    # Use the BSP's runtime.
     "rt",
-    # Remove me if you don't want logging.
-    "usb-logging",
 ]
 
 # Don't optimize build dependencies, like proc macros.
